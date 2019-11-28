@@ -5,6 +5,7 @@ Danny Abou-Chakra Umass Lowell CS student, Copyright (c)
 11/14/2019
 JavaScript generation of multiplication table
 **/
+
 //given a row this function inserts a cell
 function insertCell(row, text, attr = []) {
     var cell = document.createElement("td");
@@ -71,77 +72,67 @@ function drawTable(inputs) {
     }
 }
 
-//returns -1 if there are no empty strings in the array, returns index of the empty string
-function isEmpty(input) { 
-    for(var i = 0;i < input.length; i++){
-        if(input[i] === "" || !input[i].trim())   
-            return i;
-    }
-    return -1;
-}
-//returns -1 if all elements are numeric, returns index of non-numeric 
-function isNumeric(input) { 
-    let index = input.findIndex(Number.isNaN);
-    return index;
-}
-//Main func after all inputs are validated
-function myFunction() { 
-    //getting limits for horizontal
-    var herz1 = document.getElementById("horz1").value; 
-    var herz2 = document.getElementById("horz2").value; 
-    //getting limits for vertical
-    var vert1 = document.getElementById("vert1").value; 
-    var vert2 = document.getElementById("vert2").value;
-    
-    var isEmpt = isEmpty([herz1, herz2, vert1, vert2]); 
-    var indexofNan = isNumeric([regexParse(herz1), regexParse(herz2), regexParse(vert1), regexParse(vert2)]); 
-	var ValidationMessage = document.getElementById("ValidationMessage");
+$(document).ready(function(){  
+    //input validation for non-empty and isDigit  
+    $("#formInputs").validate( { 
+            rules: { 
+                firstInput: { 
+                    required: true,
+                    digits: true,
+                },
+                secondInput: { 
+                    required: true,
+                    digits: true,
+                },
+                thirdInput: { 
+                    required: true,
+                    digits: true,
+                },
+                fourthInput: { 
+                    required: true,
+                    digits: true,
+                },
+            },
+            // errorPlacement: function(error, element) {
+            //     error.appendTo( element.parent("div").next());
+            // },
+            // //submit handler generates the table
+            submitHandler: function (form) { 
+                //getting limits for horizontal
+                var herz1 = parseInt($("#horz1").val());
+                console.log(herz1)
+                var herz2 = parseInt($("#horz2").val()); 
+                //getting limits for vertical
+                var vert1 = parseInt($("#vert1").val()); 
+                var vert2 = parseInt($("#vert2").val());
 
-    if(isEmpt != -1) { 
-        //Please fill out all fields
-		ValidationMessage.innerHTML = "Please fill input " + (isEmpt+1);
-		cleartable();
-    }
-    else if(indexofNan != -1 ) { 
-        //Please enter a number at index indexofNan
-        ValidationMessage.innerHTML = "Please enter a valid number on input " + (indexofNan + 1);
-		cleartable();
-    }
-    else { 
-        //validate horizontal max and min
-        hmax = Math.max(regexParse(herz1), regexParse(herz2));
-        hmin = Math.min(regexParse(herz1), regexParse(herz2));
+                hmax = Math.max((herz1), (herz2));
+                hmin = Math.min((herz1), (herz2));
 
-        //validate vertical max and min
-        vmax = Math.max(regexParse(vert1), regexParse(vert2));
-        vmin = Math.min(regexParse(vert1), regexParse(vert2));
+                //validate vertical max and min
+                vmax = Math.max((vert1), (vert2));
+                vmin = Math.min((vert1), (vert2));
 
-        drawTable([hmin, hmax, vmin, vmax]);
-		ValidationMessage.innerHTML = "";
-    }
-}
-//clears inputs 
-function clearInput() { 
-	document.getElementById("vert1").value = '';
-	document.getElementById("vert2").value = '';
-	document.getElementById("horz1").value = '';
-	document.getElementById("horz2").value = '';
-	document.getElementById("ValidationMessage").innerHTML = '';
-	cleartable();
-}
-//clears table
-function cleartable() { 
+                drawTable([hmin, hmax, vmin, vmax]);
+            }
+        });
+    //clears error from loading page
+    var isValid = $("#formInputs").validate().form(); 
+    $('label[class^="error').remove();
 
-	var elem = document.getElementById('multiplicationTable');
-	if (elem != null)
-	{
-	  elem.parentNode.removeChild(elem);
-	}
-}
-//parses text to check for number
-function regexParse(text) { 
-	if(/^-?[0-9]\d*(\.\d+)?$/.test(text))
-		return parseInt(text);
-	return NaN;
-}
-
+    //clear button 
+    $("#clearButton").on("click", function() {
+        //clears inputs
+        $("#horz1").val('');
+        $("#horz2").val('');
+        $("#vert1").val('');
+        $("#vert2").val('');
+        //clears table if not null
+        var elem = $('#multiplicationTable');
+        if (elem != null){
+            elem.remove();
+        }
+        //removes error messages 
+        $('label[class^="error"]:not(.valid)').remove();
+    });     
+});
