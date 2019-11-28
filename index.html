@@ -11,25 +11,24 @@ html file for multiplication table
     <title>Multiplier Table</title>
     <link rel="stylesheet" href="css/multi.css" />
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
-</head>
+  </head>
   <body class = "container mt-5 mb-5">
     <div class = "body">
-      <form id="formInputs">
-          <div>
+      <form id="horizontal">
           Enter horizontal axis bounding numbers. Order does not matter. <br>
-          <input name = "firstInput" type="text" id="horz1" class="form-control col-3 mt-3 mb-3" >
-          <input name = "secondInput" type="text" id="horz2" class="form-control col-3" >
-          <br>Enter vertical axis bounding numbers. Order does not matter. <br>
-          <input name = "thirdInput" type="text" id="vert1" class="form-control col-3 mt-3 mb-3" >
-          <input name = "fourthInput" type="text" id="vert2" class="form-control col-3"> <br>
-          <button id = "submitButton" type="submit" class="btn btn-primary mt-5">Process</button> 
-          <button id = "clearButton" type="button" class="btn btn-secondary mt-5">Clear</button>
-        </div>      
+          <input type="text" id="horz1" class="form-control col-3 mt-3 mb-3" >
+          <input type="text" id="horz2" class="form-control col-3" >
       </form>
-	  </div>
+      <form id="vertical">
+          Enter vertical axis bounding numbers. Order does not matter. <br>
+          <input type="text" id="vert1" class="form-control col-3 mt-3 mb-3" >
+          <input type="text" id="vert2" class="form-control col-3">
+      </form>
+      <button type="button" class="btn btn-primary mt-5" onclick="myFunction()">Process</button> 
+	  <button type="button" class="btn btn-secondary mt-5" onclick="clearInput()">Clear</button>
+      <div id ="ValidationMessage"><p></p></div>
+	</div>
     <div id= "div1" class="mb-5"></div> 
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.js"></script>
     <script src="js/multiplier.js"></script>
   </body>
 </html>
